@@ -10,6 +10,7 @@ import com.demo.cash_machine.repository.entity.DebitCard
 import com.demo.cash_machine.repository.entity.Transaction
 
 fun Account.toDomain(): AccountDTO = AccountDTO(
+      accountId = id,
 	clientName = client.name,
 	cards = cards.map { it.toDomain() }
 )
