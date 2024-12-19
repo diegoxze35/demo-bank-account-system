@@ -9,7 +9,7 @@ import java.util.Date
 @PrimaryKeyJoinColumn(name = "card_id")
 class DebitCard(
 	@Column(name = "balance")
-	val balance: Double,
+	var balance: Double,
 	id: Int,
 	number: String,
 	nip: String,

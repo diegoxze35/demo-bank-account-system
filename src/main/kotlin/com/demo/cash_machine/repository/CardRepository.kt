@@ -5,6 +5,8 @@ import org.springframework.data.jpa.repository.JpaRepository
 
 interface CardRepository : JpaRepository<Card, Int> {
 	
+	fun findCardByNumber(number: String): Card?
+	
 	fun findCardByNumberAndNip(number: String, nip: String): Card?
 	
 }

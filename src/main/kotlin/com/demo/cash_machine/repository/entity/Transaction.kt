@@ -15,7 +15,7 @@ data class Transaction(
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "transaction_id", columnDefinition = "BIGINT")
-	val id: Int,
+	val id: Int = 0,
 	
 	@Column(name = "date", nullable = false)
 	val dateAndHour: Timestamp,

@@ -19,7 +19,7 @@ class CreditCard(
 	val creditLimit: Double,
 	
 	@Column(name = "credit_balance")
-	val creditBalance: Double,
+	var creditBalance: Double,
 	
 	id: Int,
 	number: String,
