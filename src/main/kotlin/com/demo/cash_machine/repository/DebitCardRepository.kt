@@ -14,4 +14,9 @@ interface DebitCardRepository : JpaRepository<Card, Int> {
     @Query("UPDATE debit_card c SET c.balance = c.balance - :amount WHERE c.card_id = :cardId", nativeQuery = true)
     fun withdrawMoneyFromCard(@Param("cardId") cardId: Int, @Param("amount") amount: Double)
 
+    @Modifying
+    @Transactional
+    @Query("UPDATE debit_card c SET c.balance = c.balance + :amount WHERE c.card_id = :cardId", nativeQuery = true)
+    fun depositToCard(@Param("cardId") cardId: Int, @Param("amount") amount: Double)
+
 }

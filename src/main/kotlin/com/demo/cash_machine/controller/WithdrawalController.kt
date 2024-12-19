@@ -9,12 +9,12 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/api")
-class CashWithdrawalController(
+class WithdrawalController(
     val withdrawalService: WithdrawalService
 ) {
 
     @RequestMapping("/withdraw")
-    fun withdraw(@RequestBody request: WithdrawalRequest):WithdrawalResponse {
+    fun withdraw(@RequestBody request: WithdrawalRequest): WithdrawalResponse {
         val (cardNumber, nip, amount) = request
         return withdrawalService.withdrawal(cardNumber, nip, amount)
     }
