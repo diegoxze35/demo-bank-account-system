@@ -2,10 +2,12 @@ package com.demo.cash_machine.repository.extension
 
 import com.demo.cash_machine.model.AccountDTO
 import com.demo.cash_machine.model.CardDTO
+import com.demo.cash_machine.model.TransactionDTO
 import com.demo.cash_machine.repository.entity.Account
 import com.demo.cash_machine.repository.entity.Card
 import com.demo.cash_machine.repository.entity.CreditCard
 import com.demo.cash_machine.repository.entity.DebitCard
+import com.demo.cash_machine.repository.entity.Transaction
 
 fun Account.toDomain(): AccountDTO = AccountDTO(
 	clientName = client.name,
@@ -32,3 +34,9 @@ fun Card.toDomain(): CardDTO = when(this) {
 	)
 	else -> throw IllegalArgumentException()
 }
+
+fun Transaction.toDomain(): TransactionDTO = TransactionDTO(
+	dateAndHour = dateAndHour,
+	amount = amount,
+	concept = concept
+)

@@ -1,6 +1,6 @@
 package com.demo.cash_machine.controller
 
-import com.demo.cash_machine.repository.entity.Transaction
+import com.demo.cash_machine.model.TransactionDTO
 import com.demo.cash_machine.service.ViewTransactionService
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -14,7 +14,7 @@ class ViewTransactionsController(
 ) {
 
     @PostMapping("/view")
-    fun viewTransactions(@RequestBody request: Int): List<Transaction> {
+    fun viewTransactions(@RequestBody request: Int): List<TransactionDTO> {
         return viewTransactionService.view(request)
     }
 

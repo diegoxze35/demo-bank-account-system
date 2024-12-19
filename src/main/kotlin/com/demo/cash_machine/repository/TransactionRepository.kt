@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository
 
 interface TransactionRepository : JpaRepository<Transaction, Int> {
 
-    fun findByAccountIdOrderByDateAndHour(accountId: Int): List<Transaction>
+    fun findByAccountIdOrderByDateAndHourDesc(accountId: Int): List<Transaction>
 
 }

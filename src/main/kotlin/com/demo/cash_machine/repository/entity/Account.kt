@@ -18,11 +18,11 @@ data class Account(
 	@Column(name = "account_id", columnDefinition = "BIGINT")
 	val id: Int,
 
-	@Column(name = "sum_withdrawal", nullable = false)
-	val sumWithdrawal: Double,
+	@Column(name = "sum_withdrawal", nullable = false, columnDefinition = "double default 0.0")
+	val sumWithdrawal: Double = 0.0,
 
-    @Column(name = "sum_deposit", nullable = false)
-	val sumDeposit: Double,
+    @Column(name = "sum_deposit", nullable = false, columnDefinition = "double default 0.0")
+	val sumDeposit: Double = 0.0,
 
 	@OneToOne(targetEntity = Client::class)
 	@JoinColumn(name = "client_id")
