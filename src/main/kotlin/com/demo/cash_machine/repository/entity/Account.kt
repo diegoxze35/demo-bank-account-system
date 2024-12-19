@@ -12,19 +12,25 @@ import jakarta.persistence.OneToOne
 
 @Entity
 data class Account(
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "account_id", columnDefinition = "BIGINT")
 	val id: Int,
-	
+
+	@Column(name = "sum_withdrawal", nullable = false)
+	val sumWithdrawal: Double,
+
+    @Column(name = "sum_deposit", nullable = false)
+	val sumDeposit: Double,
+
 	@OneToOne(targetEntity = Client::class)
 	@JoinColumn(name = "client_id")
 	val client: Client,
-	
+
 	@OneToMany(targetEntity = Card::class, fetch = FetchType.EAGER, mappedBy = "account")
 	val cards: List<Card>,
-	
+
 	@OneToMany(targetEntity = Transaction::class, fetch = FetchType.LAZY, mappedBy = "account")
 	val transactions: List<Transaction>
 )

@@ -29,7 +29,7 @@ abstract class Card(
 	@Column(nullable = false, length = 3, unique = true)
 	val cvc: String,
 	
-	@Column(name = "expiration_date", nullable = false)
+	@Column(name = "expiration_date", nullable = false, columnDefinition = "DATE")
 	val expirationDate: Date,
 	
 	@ManyToOne(targetEntity = Account::class)

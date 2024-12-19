@@ -9,10 +9,10 @@ import java.util.Date
 @PrimaryKeyJoinColumn(name = "card_id")
 class CreditCard(
 	
-	@Column(name = "closing_date")
+	@Column(name = "closing_date", columnDefinition = "DATE")
 	val closingDate: Date,
 	
-	@Column(name = "paymentDate")
+	@Column(name = "paymentDate", columnDefinition = "DATE")
 	val paymentDate: Date,
 	
 	@Column(name = "credit_limit")
