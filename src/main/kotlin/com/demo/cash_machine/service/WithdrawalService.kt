@@ -22,7 +22,7 @@ class WithdrawalService(
 
         if (card is DebitCard) {
             if (card.balance < amount) return WithdrawalResponse("Not enough money on your debit card")
-            if (card.account.sumWithdrawal + amount > 50000) return WithdrawalResponse("Withdrawal limit exceeded")
+            if (card.account!!.sumWithdrawal + amount > 50000) return WithdrawalResponse("Withdrawal limit exceeded")
             if (card.number.substring(0..3) == "2222")
                 debitCardRepository.withdrawDebitCard(card.id, amount)
             else
@@ -37,7 +37,7 @@ class WithdrawalService(
             }
         }
 
-        accountRepository.updateSumWithdrawal(card.account.id, amount)
+        accountRepository.updateSumWithdrawal(card.account!!.id, amount)
         return WithdrawalResponse("successful")
     }
 }

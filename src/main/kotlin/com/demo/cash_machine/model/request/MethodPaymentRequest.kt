@@ -11,22 +11,23 @@ import com.fasterxml.jackson.annotation.JsonTypeName
 )
 sealed class MethodPaymentRequest(
 	open val amount: Double,
-	open val accountId: Int,
-	open val creditCardPaymentRequest: CreditCardPaymentRequest?
+	open val creditCardToPay: String?,
+	open val serviceReference: String?
 ) {
 	
 	@JsonTypeName("card")
 	data class CardMethodPaymentRequest(
 		override val amount: Double,
-		override val accountId: Int,
-		override val creditCardPaymentRequest: CreditCardPaymentRequest?,
+		override val creditCardToPay: String?,
+		override val serviceReference: String?,
 		val credentials: AuthRequest
-	) : MethodPaymentRequest(amount, accountId, creditCardPaymentRequest)
+	) : MethodPaymentRequest(amount, creditCardToPay, serviceReference)
 	
 	@JsonTypeName("cash")
 	data class CashMethodPaymentRequest(
 		override val amount: Double,
-		override val accountId: Int,
-		override val creditCardPaymentRequest: CreditCardPaymentRequest?
-	) : MethodPaymentRequest(amount, accountId, creditCardPaymentRequest)
+		override val creditCardToPay: String?,
+		override val serviceReference: String?,
+		val accountId: Int?,
+	) : MethodPaymentRequest(amount, creditCardToPay, serviceReference)
 }

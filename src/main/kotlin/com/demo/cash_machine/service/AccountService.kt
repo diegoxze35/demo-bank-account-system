@@ -15,7 +15,7 @@ class AccountService(
 			clientAccount = null,
 			message = "Card number or nip is wrong"
 		)
-		return AuthResponse(card.account.toDomain(), "Success")
+		return AuthResponse(card.account?.toDomain(), "Success")
 	}
 	
 }

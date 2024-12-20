@@ -2,6 +2,7 @@ package com.demo.cash_machine.controller
 
 import com.demo.cash_machine.model.request.MethodPaymentRequest
 import com.demo.cash_machine.model.response.CheckServiceBalanceResponse
+import com.demo.cash_machine.model.response.PaymentResponse
 import com.demo.cash_machine.service.PaymentService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -24,10 +25,9 @@ class PaymentController(
 	}
 	
 	@PostMapping("/pay")
-	fun pay(@RequestBody request: MethodPaymentRequest): ResponseEntity<Boolean> =
-		with(paymentService.processPayment(request)) {
-			ResponseEntity(this, if (this) HttpStatus.OK else HttpStatus.BAD_REQUEST)
-		}
-	
-	
+	fun pay(@RequestBody request: MethodPaymentRequest): ResponseEntity<PaymentResponse> {
+		if (request.creditCardToPay == null && request.serviceReference == null)
+			return ResponseEntity.badRequest().body(PaymentResponse.BadRequest)
+		return ResponseEntity(paymentService.processPayment(request), HttpStatus.OK)
+	}
 }

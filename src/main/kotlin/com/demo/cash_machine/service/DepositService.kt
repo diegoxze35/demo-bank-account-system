@@ -1,7 +1,6 @@
 package com.demo.cash_machine.service
 
 import com.demo.cash_machine.model.response.DepositResponse
-import com.demo.cash_machine.model.response.WithdrawalResponse
 import com.demo.cash_machine.repository.AccountRepository
 import com.demo.cash_machine.repository.CardRepository
 import com.demo.cash_machine.repository.DebitCardRepository
@@ -20,9 +19,9 @@ class DepositService(
         val card = cardRepository.findCardByNumber(cardNUmber) ?: return DepositResponse("Card not found")
 
         if (card is DebitCard) {
-            if (card.account.sumDeposit + amount > 50000) return DepositResponse("Deposit limit exceeded")
+            if (card.account!!.sumDeposit + amount > 50000) return DepositResponse("Deposit limit exceeded")
             debitCardRepository.depositToCard(card.id, amount)
-            accountService.updateSumDeposit(card.account.id, amount)
+            accountService.updateSumDeposit(card.account!!.id, amount)
         } else if (card is CreditCard) return DepositResponse("Credit card can't be used for deposit")
 
         return DepositResponse("Successful")

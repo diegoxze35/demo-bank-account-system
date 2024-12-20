@@ -1,5 +1,6 @@
 package com.demo.cash_machine.service.model
 
+import com.demo.cash_machine.model.response.MethodPaymentResponse
 import com.demo.cash_machine.repository.CreditCardRepository
 import com.demo.cash_machine.repository.DebitCardRepository
 import com.demo.cash_machine.repository.entity.Card
@@ -12,31 +13,37 @@ class CardMethodPayment(
 	private val creditCardRepository: CreditCardRepository
 ) : MethodPayment {
 	
-	override fun pay(amount: Double): Boolean {
+	override fun pay(amount: Double): MethodPaymentResponse {
 		return when (card) {
 			is CreditCard -> {
 				val creditCard = creditCardRepository.findById(card.id).get()
 				val newBalance = creditCard.creditBalance + amount
-				return if (newBalance <= creditCard.creditLimit) {
+				if (newBalance <= creditCard.creditLimit) {
 					creditCard.creditBalance = newBalance
 					creditCardRepository.save(creditCard)
-					true
+					MethodPaymentResponse.Success.CardPaymentSuccess("Payment successful!", newBalance)
 				} else
-					false
+					MethodPaymentResponse.Error.CardPaymentError(
+						"You are trying to pay an amount greater than your credit limit, " +
+								"your credit limit is ${creditCard.creditLimit}"
+					)
 			}
 			
 			is DebitCard -> {
 				val debitCard = debitCardRepository.findById(card.id).get()
 				val newBalance = debitCard.balance - amount
-				return if (newBalance >= 0.0) {
+				if (newBalance >= 0.0) {
 					debitCard.balance = newBalance
 					debitCardRepository.save(debitCard)
-					true
+					MethodPaymentResponse.Success.CardPaymentSuccess("Payment successful!", newBalance)
 				} else
-					false
+					MethodPaymentResponse.Error.CardPaymentError(
+						"You don't have enough balance for this transaction! " +
+								"currently, your balance is ${debitCard.balance}"
+					)
 			}
 			
-			else -> false
+			else -> throw IllegalArgumentException("Card does not exist.")
 		}
 	}
 	

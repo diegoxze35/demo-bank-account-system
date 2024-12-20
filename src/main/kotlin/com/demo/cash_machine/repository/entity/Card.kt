@@ -33,6 +33,6 @@ abstract class Card(
 	val expirationDate: Date,
 	
 	@ManyToOne(targetEntity = Account::class)
-	@JoinColumn(name = "account_id")
-	val account: Account
+	@JoinColumn(name = "account_id", nullable = true)
+	val account: Account?
 )
